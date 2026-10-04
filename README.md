@@ -1,5 +1,11 @@
 # ◈ NGRAMS PREDICTION
 
+## 🌐 Live Demo
+
+Try the NGRAMS Prediction application:
+
+https://ngrams-prediction.onrender.com
+
 ### Statistical Language Intelligence using N-Gram NLP
 
 **NGRAMS PREDICTION** is an interactive Natural Language Processing (NLP) web application that learns statistical word relationships directly from a user-provided text corpus and predicts the next word using **Unigram, Bigram, and Trigram language models**.
@@ -440,7 +446,7 @@ It is especially suitable for demonstrating how a simple statistical NLP model c
 ---
 
 ## 👩‍💻 Author
-
+**Kashish Siddiqui**
 **NGRAMS PREDICTION**
 
 A student/academic NLP project demonstrating statistical language modeling with an interactive web interface.
