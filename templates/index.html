@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NGRAMS PREDICTION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+</head>
+
+<body>
+<div id="cursorGlow"></div>
+<div id="pageLoader"><div class="loader-mark">N</div><div class="loader-line"><span></span></div><small>INITIALIZING LANGUAGE ENGINE</small></div>
+<div class="ambient ambient-a"></div>
+<div class="ambient ambient-b"></div>
+<div class="grain"></div>
+
+<nav class="topbar">
+    <div class="brand">
+        <div class="brand-symbol">N</div>
+        <div>
+            <div class="brand-name">NGRAMS <span>PREDICTION</span></div>
+            <div class="brand-caption">STATISTICAL LANGUAGE INTELLIGENCE</div>
+        </div>
+    </div>
+    <div class="top-nav-links">
+        <a href="#workspace">Corpus</a>
+        <a href="#constellation">Constellation</a>
+        <a href="#probability">Probability</a>
+        <a href="#prediction">Prediction</a>
+    </div>
+    <div class="top-status"><i></i> LOCAL MODEL ONLINE</div>
+</nav>
+
+<main>
+<section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-copy">
+        <div class="eyebrow">CLASSICAL NLP / N-GRAM ENGINE</div>
+        <h1>Understand the<br><em>language.</em></h1>
+        <p>Teach the model your corpus. Explore how words connect, how probability shapes language, and what the model predicts next.</p>
+        <div class="hero-actions">
+            <button class="primary" onclick="scrollToId('workspace')">Start exploring <b>↗</b></button>
+            <button class="ghost" onclick="loadDemo()">Load demo corpus</button>
+        </div>
+    </div>
+    <div class="hero-orbit">
+        <div class="orbit-ring ring-1"></div>
+        <div class="orbit-ring ring-2"></div>
+        <div class="orbit-ring ring-3"></div>
+        <div class="core">N<span>-GRAM</span></div>
+        <span class="orbit-dot d1">AI</span>
+        <span class="orbit-dot d2">DATA</span>
+        <span class="orbit-dot d3">MODEL</span>
+        <span class="orbit-dot d4">WORD</span>
+    </div>
+    <div class="hero-bottom">
+        <span>CORPUS</span><b>→</b><span>TOKENS</span><b>→</b><span>N-GRAMS</span><b>→</b><span>PROBABILITY</span><b>→</b><span>PREDICTION</span>
+    </div>
+</section>
+
+<section id="workspace" class="workspace">
+    <div class="section-kicker">01 / TEACH THE ENGINE</div>
+    <div class="section-heading">
+        <h2>Your corpus becomes its world.</h2>
+        <p>Every visualization below is generated from the text you provide.</p>
+    </div>
+
+    <div class="input-shell">
+        <div class="input-head">
+            <span>LIVE CORPUS</span>
+            <label><input id="punctuation" type="checkbox" checked> remove punctuation</label>
+        </div>
+        <textarea id="corpus">{{ default_corpus }}</textarea>
+        <div class="input-foot">
+            <span id="charCount">0 characters</span>
+            <button class="primary small" onclick="analyze()">Analyze corpus <b>↗</b></button>
+        </div>
+    </div>
+
+    <div id="loading" class="loading hidden"><span></span> Building statistical language model...</div>
+
+    <div id="stats" class="stats-grid"></div>
+    <div class="model-ribbon">
+        <div><span class="ribbon-dot"></span><b>LEARNING STATE</b><small>Corpus synchronized</small></div>
+        <div><b>MODEL</b><small>Unigram · Bigram · Trigram</small></div>
+        <div><b>INFERENCE</b><small>Context-aware next word</small></div>
+        <div class="ribbon-end">NLP / 01</div>
+    </div>
+</section>
+
+<section id="constellation" class="constellation-section">
+    <div class="section-kicker">02 / LANGUAGE CONSTELLATION</div>
+    <div class="section-heading">
+        <h2>Watch the corpus become a universe.</h2>
+        <p>Nodes are words. Connections are learned sequential relationships.</p>
+    </div>
+
+    <div class="constellation-layout">
+        <div class="space-card">
+            <div class="space-top">
+                <div><span class="live-dot"></span> LIVE TOKEN SPACE</div>
+                <span>DRAG / SCROLL TO EXPLORE</span>
+            </div>
+            <div id="threeCanvas"></div><div id="nodeLabels"></div><div id="nodeInspector" class="node-inspector hidden"></div>
+            <div class="space-gradient"></div>
+            <div class="space-center-label">LANGUAGE<br><strong>CONSTELLATION</strong></div>
+            <div class="space-hint">● drag to rotate &nbsp; / &nbsp; scroll to zoom</div>
+        </div>
+
+        <aside class="insight-card">
+            <div class="mini-label">MODEL INSIGHT</div>
+            <h3>Words are not isolated.</h3>
+            <p>The model learns from the sequence in which words appear. Frequent transitions become stronger connections.</p>
+            <div class="legend">
+                <div><i class="cyan"></i><span>High frequency</span></div>
+                <div><i class="violet"></i><span>Learned relationship</span></div>
+                <div><i class="line"></i><span>Sequential connection</span></div>
+            </div>
+            <div class="insight-stat">
+                <span>Most frequent token</span>
+                <strong id="topWord">—</strong>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<section id="probability" class="analysis-section">
+    <div class="section-kicker">03 / PROBABILITY LAB</div>
+    <div class="section-heading">
+        <h2>Inside the language model.</h2>
+        <p>See exactly how the probabilities are calculated.</p>
+    </div>
+
+    <div class="model-tabs">
+        <button class="tab active" data-tab="unigram">UNIGRAM</button>
+        <button class="tab" data-tab="bigram">BIGRAM</button>
+        <button class="tab" data-tab="trigram">TRIGRAM</button>
+    </div>
+    <div class="formula-card" id="formula"></div>
+    <div class="table-wrap" id="tableWrap"></div>
+</section>
+
+<section id="prediction" class="prediction-section">
+    <div class="prediction-header">
+        <div>
+            <div class="section-kicker">04 / NEXT WORD ENGINE</div>
+            <h2>What comes next?</h2>
+            <p>Give the model a context from your corpus.</p>
+        </div>
+        <div class="engine-chip"><span></span> TRIGRAM → BIGRAM BACKOFF</div>
+    </div>
+
+    <div class="predict-box">
+        <div class="prompt-icon">→</div>
+        <input id="phrase" placeholder="Try: artificial intelligence">
+        <button class="primary" onclick="predict()">Predict</button>
+    </div>
+    <div class="prediction-context" id="predictionContext"></div>
+    <div id="predictions" class="prediction-grid"></div>
+</section>
+
+<section class="method-section">
+    <div class="section-kicker">05 / THE ENGINE</div>
+    <div class="method-grid">
+        <article><span>01</span><h3>Tokenize</h3><p>Convert raw text into usable language tokens.</p></article>
+        <article><span>02</span><h3>Count</h3><p>Build unigram, bigram, and trigram frequency models.</p></article>
+        <article><span>03</span><h3>Calculate</h3><p>Convert counts into conditional probabilities.</p></article>
+        <article><span>04</span><h3>Predict</h3><p>Rank candidate next words from learned context.</p></article>
+    </div>
+</section>
+</main>
+
+<footer>
+    <strong>◈ NGRAMS PREDICTION</strong>
+    <span>Python · Flask · NLP · Three.js</span>
+</footer>
+
+<script src="/static/app.js?v=2"></script>
+</body>
+</html>
